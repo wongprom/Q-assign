@@ -5,17 +5,8 @@ import MenuDetail from './MenuDetail';
 const Menu = ({ menuDataCategory }) => {
   let [showCategory, setShowCategory] = useState(() => false);
   const [categories, setCategories] = useState(menuDataCategory);
-  // const [category0, setCategory0] = useState(menuDataCategory[0]);
-  // const [category1, setCategory1] = useState(menuDataCategory[1]);
-  //!how to add Hey/value to nested Arr/Obj...UseReduser???
-  // useEffect(() => {
-  //   let updatedArray = [...categories].map((obj, index) => {
-  //     obj.id = index;
-  //     obj.show = false;
-  //     obj.kanske = 55;
-  //   });
-  //   setCategories([...categories, updatedArray]);
-  // }, []);
+
+  //!how to add Key/value to nested Arr/Obj...UseReduser???
   useEffect(() => {
     let updatedArray = [...categories].map((obj, index) => {
       obj.id = index;
@@ -23,29 +14,13 @@ const Menu = ({ menuDataCategory }) => {
     });
     setCategories([...categories, updatedArray]);
   }, []);
-  // console.log(categories);
-  // useEffect(() => {
-  //   setCategory0({ ...category0, show: false });
-  // }, []);
-  // useEffect(() => {
-  //   setCategory1({ ...category1, show: false });
-  // }, []);
-  // let test = categories.map((cat) => {
-  //   return cat.id;
-  //   console.log('cat', cat.id);
-  // });
-  // console.log('test', test);
 
   const toggleCategoryHandler = (categorie, categoriIndex) => {
-    console.log('I was clicked');
-    console.log('categorie', categorie);
-    console.log('categoriIndex', categoriIndex);
     setShowCategory((showCategory = !showCategory));
   };
 
   return categories.map((categorie, categoriIndex) => {
     if (categorie.length < 3) {
-      // console.log('jag är undefined ', categorie);
       return;
     }
     return (
@@ -68,10 +43,6 @@ const Menu = ({ menuDataCategory }) => {
               <MenuDetail category={categorie} />
             </Item.Content>
           )}
-
-          {/* <Item.Content>
-            <MenuDetail category={categorie} />
-          </Item.Content> */}
         </Item>
       </Item.Group>
     );

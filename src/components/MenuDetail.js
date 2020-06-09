@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import { Item } from 'semantic-ui-react';
 
 const MenuDetail = ({ category }) => {
-  console.log('category', category);
-  console.log('category.products', category.products);
   const [categories, setCategories] = useState(category);
-  //* (!)categories.show needed to tiggle menu as is, 2 at the time
+  //* need (!) WIP. toggle ONE category
   if (!categories.show) {
     return categories.products.map((product) => {
-      console.log('från map', product);
       return (
         <Item style={{ color: 'red', border: '1px solid red' }}>
           <Item.Image
