@@ -23,12 +23,12 @@ const MenuList = (props) => {
   // menusData.sort(dynamicSort('name'));
   menusData.sort((a, b) => (a.name > b.name ? 1 : -1));
   return menusData ? (
-    menusData.map((singleMenuData) => {
+    menusData.map((menuData, index) => {
       return (
-        <Grid.Column key={singleMenuData.name} width={8}>
+        <Grid.Column key={index} width={8}>
           <Container textAlign="center">
-            <h2>{singleMenuData.name}</h2>
-            <Menu singleMenuData={singleMenuData} />
+            <h2 style={{ color: 'blue' }}>{menuData.name}</h2>
+            <Menu menuDataCategory={menuData.categories} />
           </Container>
         </Grid.Column>
       );
