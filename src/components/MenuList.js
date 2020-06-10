@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { data } from '../data/testdata';
 import Menu from '../components/Menu';
+import Category from '../components/Category';
 
 const MenuList = () => {
   const [menusData, setMenus] = useState(data);
@@ -17,12 +18,17 @@ const MenuList = () => {
   const filterMenus = menusData.filter((menu) => {
     return menu.name.toLowerCase().includes(inputValue.toLowerCase());
   });
+
   console.log('menus', menusData);
   let menus = filterMenus.map((menu, index) => {
     return (
       <div key={index}>
         <h1>{menu.name}</h1>
-        <h2>{menu.categories.map((category) => category.name)}</h2>
+        <h2>
+          {menu.categories.map((category) => (
+            <Category categorys={category} />
+          ))}
+        </h2>
       </div>
     );
   });
@@ -39,6 +45,7 @@ const MenuList = () => {
           value={inputValue}
           placeholder="Filter Menus"
         />
+        {/* <Button></Button> */}
       </div>
       {menus}
     </div>
