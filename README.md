@@ -7,7 +7,7 @@ Attached is a js file with menus in a JSON object. These menus contains categori
 ## Your task is the fallowing
 
 ```
- 1. [ ] Create a GUI that displays these menus with the possibility to see the details such as which categories and products it has. The menus should be alphabetically sorted.
+ 1. [X] Create a GUI that displays these menus with the possibility to see the details such as which categories and products it has. The menus should be alphabetically sorted.
 
 2. Make the following three filters:
     2.1 [X] Filter by name, should be case insensitive

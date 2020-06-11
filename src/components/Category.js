@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const Category = ({ categorys }) => {
-  console.log(categorys);
+  // console.log(categorys);
   let [showCategory, setShowCategory] = useState(false);
 
   return (
@@ -13,7 +13,7 @@ const Category = ({ categorys }) => {
       {showCategory &&
         categorys.products.map((product) => {
           return (
-            <div>
+            <div key={product.name}>
               <p> Rätt: {product.name}</p>
               <p>{product.price} Kr </p>
             </div>
