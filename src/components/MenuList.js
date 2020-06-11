@@ -8,6 +8,7 @@ const MenuList = () => {
 
   const [inputValue, setInputValue] = useState('');
   const [active, setActive] = useState([]);
+  const [shopIds, setShopids] = useState([]);
   useEffect(() => {
     setMenusData(data.sort((a, b) => (a.name > b.name ? 1 : -1)));
   }, []);
@@ -16,10 +17,9 @@ const MenuList = () => {
     let text = event.target.value;
     setInputValue(text);
   };
-  console.log(menusData);
+  // console.log(menusData);
 
   const displayActivDayHandler = () => {
-    console.groupCollapsed('displayActivDayHandler()');
     const daysOfTheWeek = [
       'Sunday',
       'Monday',
@@ -37,12 +37,10 @@ const MenuList = () => {
         return menu.activeDays.includes(currentDay);
       })
     );
-    // console.log('activeMenu', activeMenu);
     console.log('currentDay: ', currentDay);
     console.groupEnd();
   };
 
-  console.log('active', active);
   const filterMenus = menusData.filter((menu) => {
     return menu.name
       .toLowerCase()
@@ -64,8 +62,52 @@ const MenuList = () => {
     );
   });
 
+  const filterShopIdsHandler = (event) => {
+    const target = event.target;
+    let value = target.value;
+    if (target.checked) {
+      setShopids([...shopIds, value]);
+    } else {
+      setShopids([...shopIds.filter((item) => item !== value)]);
+    }
+  };
   return (
     <div>
+      <form>
+        <fieldset>
+          <div>
+            <label htmlFor="ett">Restaurang 1</label>
+            <input
+              type="checkbox"
+              name="ett"
+              id="ett"
+              value="ett"
+              onChange={(event) => filterShopIdsHandler(event)}
+            />
+          </div>
+          <div>
+            <label htmlFor="tva">Restaurang 2</label>
+            <input
+              type="checkbox"
+              name="tva"
+              id="tva"
+              value="tva"
+              onChange={(event) => filterShopIdsHandler(event)}
+            />
+          </div>
+          <div>
+            <label htmlFor="tre">Restaurang 3</label>
+            <input
+              type="checkbox"
+              name="tre"
+              id="tre"
+              value="tre"
+              onChange={(event) => filterShopIdsHandler(event)}
+            />
+          </div>
+        </fieldset>
+      </form>
+      {shopIds}
       <div>
         <label>Filter Menus</label>
         <input
