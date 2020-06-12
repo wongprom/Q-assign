@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { data } from '../data/testdata';
 import Menu from '../components/Menu';
 import Category from '../components/Category';
+import heroImg from '../images/hero-img-bowl-meat.jpg';
+import menuImg from '../images/main-background.jpg';
 
 const MenuList = () => {
   const [menusData, setMenusData] = useState([]);
@@ -71,16 +73,22 @@ const MenuList = () => {
       .includes(inputValue.toLowerCase().trim());
   });
 
-  let menus = filterMenus.map((menu) => {
-    // console.log(menu);
+  let menus = filterMenus.map((menu, index) => {
     return (
-      <div key={menu.name}>
-        <h1>{menu.name}</h1>
-        <h2>
+      <div
+        style={{ backgroundImage: `url(${menuImg})`, minHeight: '200px' }}
+        className="flex-column m-5 minh-100"
+        key={menu.name}
+      >
+        {/* <img src={menuImg} width="100%" height="100%" alt="paper" 
+        
+        /> */}
+        <h1 className="text-center">{menu.name}</h1>
+        <div className="d-flex">
           {menu.categories.map((category) => (
             <Category key={category.name} categorys={category} />
           ))}
-        </h2>
+        </div>
       </div>
     );
   });
@@ -96,55 +104,96 @@ const MenuList = () => {
   };
   return (
     <div>
-      <form>
-        <fieldset>
-          <div>
-            <label htmlFor="ett">Restaurang 1</label>
+      <div className="jumbotron jumbotron-fluid">
+        <div className="container">
+          <img src={heroImg} className="img-fluid" alt="Responsive image" />
+          <h1 className="display-4">Be smart, eat smart.</h1>
+          <p className="lead">
+            Join our <span className="font-weight-bold">Green&Heal</span> family
+          </p>
+        </div>
+      </div>
+      <div className="container-fluid">
+        <form className="text-center">
+          <h2>Sort our Menus by restaurants </h2>
+          <div className="form-check form-check-inline">
             <input
+              className="form-check-input"
               type="checkbox"
+              value="ett"
               name="ett"
               id="ett"
-              value="ett"
               onChange={(event) => filterShopIdsHandler(event)}
             />
+            <label className="form-check-label" htmlFor="defaultCheck1">
+              Shop ID 1
+            </label>
           </div>
-          <div>
-            <label htmlFor="tva">Restaurang 2</label>
+          <div className="form-check form-check-inline">
             <input
+              className="form-check-input"
               type="checkbox"
+              value="tva"
               name="tva"
               id="tva"
-              value="tva"
               onChange={(event) => filterShopIdsHandler(event)}
             />
+            <label className="form-check-label" for="defaultCheck1">
+              Shop ID 2
+            </label>
           </div>
-          <div>
-            <label htmlFor="tre">Restaurang 3</label>
+          <div className="form-check form-check-inline">
             <input
+              className="form-check-input"
               type="checkbox"
+              value="tre"
               name="tre"
               id="tre"
-              value="tre"
               onChange={(event) => filterShopIdsHandler(event)}
             />
+            <label className="form-check-label" for="defaultCheck1">
+              Shop ID 3
+            </label>
           </div>
-        </fieldset>
-      </form>
+        </form>
+      </div>
+
       <h2>{chosenShopIds}</h2>
       <div>
-        <label>Filter Menus</label>
-        <input
-          type="text"
-          onChange={(e) => filterMenuHandler(e)}
-          value={inputValue}
-          placeholder="Filter Menus"
-        />
-        <button onClick={() => displayActivDayHandler()}>
-          Dagens aktiva Meny
-        </button>
-        <button onClick={() => setMenusData(data)}>Alla våra menyer</button>
+        <div className="container">
+          <div className="input-group mb-5">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="inputGroup-sizing-default">
+                Search Menu
+              </span>
+            </div>
+            <input
+              type="text"
+              className="form-control"
+              aria-label="Default"
+              aria-describedby="inputGroup-sizing-default"
+              value={inputValue}
+              onChange={(e) => filterMenuHandler(e)}
+            />
+            <button
+              onClick={() => displayActivDayHandler()}
+              type="button"
+              className="btn btn-info ml-3"
+            >
+              Dagens aktiva Meny
+            </button>
+
+            <button
+              onClick={() => setMenusData(data)}
+              type="button"
+              className="btn btn-info ml-2"
+            >
+              Alla våra menyer
+            </button>
+          </div>
+        </div>
       </div>
-      {menus}
+      <div className="container fluid mb-5">{menus}</div>
     </div>
   );
 };

@@ -6,10 +6,11 @@ const Category = ({ categorys }) => {
 
   return (
     <div
-      style={{ border: '1px solid blue' }}
+      className="col text-center"
       onClick={() => setShowCategory((showCategory = !showCategory))}
     >
       <h2>{categorys.name}</h2>
+
       {showCategory &&
         categorys.products.map((product) => {
           return (
@@ -19,15 +20,6 @@ const Category = ({ categorys }) => {
             </div>
           );
         })}
-
-      {/* {categorys.products.map((product) => {
-        return (
-          <div>
-            <p> Rätt: {product.name}</p>
-            <p>{product.price} Kr </p>
-          </div>
-        );
-      })} */}
     </div>
   );
 };
