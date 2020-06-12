@@ -5,19 +5,39 @@ import Category from '../components/Category';
 
 const MenuList = () => {
   const [menusData, setMenusData] = useState([]);
-
   const [inputValue, setInputValue] = useState('');
   const [active, setActive] = useState([]);
-  const [shopIds, setShopids] = useState([]);
+  const [chosenShopIds, setChosenShopIds] = useState([]);
+
+  useEffect(() => {
+    console.groupCollapsed('useEffect shopIds');
+
+    // menusData.filter((menu) => {
+    //   return menu.activeDays.includes(currentDay);
+    // })
+    console.log('Menyer att filtrera  ifrån', menusData);
+
+    let test = menusData.map((menuData) => {
+      return menuData.shopIds.filter((shopId) => {
+        return (
+          chosenShopIds.map((chosenShopId) => chosenShopId === shopId) &&
+          menuData
+        );
+      });
+    });
+    console.log('hämta menyer med dessa id ', chosenShopIds);
+    console.log('test', test);
+    console.groupEnd();
+    // setMenusData([...menusData, test]);
+  }, [chosenShopIds]);
+
   useEffect(() => {
     setMenusData(data.sort((a, b) => (a.name > b.name ? 1 : -1)));
   }, []);
-
   const filterMenuHandler = (event) => {
     let text = event.target.value;
     setInputValue(text);
   };
-  // console.log(menusData);
 
   const displayActivDayHandler = () => {
     const daysOfTheWeek = [
@@ -42,6 +62,9 @@ const MenuList = () => {
   };
 
   const filterMenus = menusData.filter((menu) => {
+    if (menu.name === undefined) {
+      return;
+    }
     return menu.name
       .toLowerCase()
       .trim()
@@ -66,9 +89,9 @@ const MenuList = () => {
     const target = event.target;
     let value = target.value;
     if (target.checked) {
-      setShopids([...shopIds, value]);
+      setChosenShopIds([...chosenShopIds, value]);
     } else {
-      setShopids([...shopIds.filter((item) => item !== value)]);
+      setChosenShopIds([...chosenShopIds.filter((item) => item !== value)]);
     }
   };
   return (
@@ -107,7 +130,7 @@ const MenuList = () => {
           </div>
         </fieldset>
       </form>
-      {shopIds}
+      <h2>{chosenShopIds}</h2>
       <div>
         <label>Filter Menus</label>
         <input
