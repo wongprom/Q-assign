@@ -9,7 +9,7 @@ const Navbar = () => {
           src={logo}
           width="30"
           height="30"
-          class="d-inline-block align-center"
+          className="d-inline-block align-center"
           alt="leaf"
         />
         Green&Heal

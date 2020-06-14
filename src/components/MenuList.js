@@ -6,31 +6,54 @@ import heroImg from '../images/hero-img-bowl-meat.jpg';
 import menuImg from '../images/main-background.jpg';
 
 const MenuList = () => {
+  const [allMenus, setAllMenus] = useState(data);
   const [menusData, setMenusData] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [active, setActive] = useState([]);
   const [chosenShopIds, setChosenShopIds] = useState([]);
+  // const [multiShopIds, setMultishopIds] = useState([]);
 
   useEffect(() => {
     console.groupCollapsed('useEffect shopIds');
-
-    // menusData.filter((menu) => {
-    //   return menu.activeDays.includes(currentDay);
-    // })
-    console.log('Menyer att filtrera  ifrån', menusData);
-
-    let test = menusData.map((menuData) => {
-      return menuData.shopIds.filter((shopId) => {
-        return (
-          chosenShopIds.map((chosenShopId) => chosenShopId === shopId) &&
-          menuData
-        );
-      });
-    });
     console.log('hämta menyer med dessa id ', chosenShopIds);
-    console.log('test', test);
+    console.log('Menyer att filtrera  ifrån', allMenus);
+
+    let newArr = [];
+    for (let menuData of allMenus) {
+      for (let shopId of menuData.shopIds) {
+        console.log('shopId', shopId);
+        for (let chosenShopId of chosenShopIds) {
+          console.log('chosenShopId ', chosenShopId);
+          console.log('shopId', shopId);
+
+          if (chosenShopId === shopId) {
+            // console.log('data att pusha :', menuData);
+            // console.log('data att pusha Name :', menuData.name);
+            // console.log(
+            //   'newArr IN IF ',
+            //   newArr.map((arr) => arr)
+            // );
+
+            newArr.push(menuData);
+          }
+        }
+      }
+    }
+    const removeDuplicate = (data, key) => {
+      return [...new Map(data.map((x) => [key(x), x])).values()];
+    };
+    if (removeDuplicate(newArr, (newArr) => newArr.name).length > 0) {
+      console.log('new array är INTE tom ');
+
+      console.log(removeDuplicate(newArr, (newArr) => newArr.name));
+      setMenusData(removeDuplicate(newArr, (newArr) => newArr.name));
+    } else {
+      console.log('new array är tom ');
+      setMenusData(allMenus);
+    }
+
     console.groupEnd();
-    // setMenusData([...menusData, test]);
+    // setMenusData([...menusData, newArr]);
   }, [chosenShopIds]);
 
   useEffect(() => {
@@ -76,14 +99,19 @@ const MenuList = () => {
   let menus = filterMenus.map((menu, index) => {
     return (
       <div
-        style={{ backgroundImage: `url(${menuImg})`, minHeight: '200px' }}
+        style={{
+          // backgroundImage: `url(${menuImg})`,
+          minHeight: '200px',
+          // backgroundSize: 'contain',
+          // backgroundSize: 'cover',
+        }}
         className="flex-column m-5 minh-100"
         key={menu.name}
       >
         {/* <img src={menuImg} width="100%" height="100%" alt="paper" 
         
         /> */}
-        <h1 className="text-center">{menu.name}</h1>
+        <h1 className="text-center pt-5">{menu.name.toUpperCase()}</h1>
         <div className="d-flex">
           {menu.categories.map((category) => (
             <Category key={category.name} categorys={category} />
@@ -138,7 +166,7 @@ const MenuList = () => {
               id="tva"
               onChange={(event) => filterShopIdsHandler(event)}
             />
-            <label className="form-check-label" for="defaultCheck1">
+            <label className="form-check-label" htmlFor="defaultCheck1">
               Shop ID 2
             </label>
           </div>
@@ -151,7 +179,7 @@ const MenuList = () => {
               id="tre"
               onChange={(event) => filterShopIdsHandler(event)}
             />
-            <label className="form-check-label" for="defaultCheck1">
+            <label className="form-check-label" htmlFor="defaultCheck1">
               Shop ID 3
             </label>
           </div>
